@@ -78,7 +78,7 @@ sudo apt update -y
 ```
 ---
 
-Step #1:Creating Prometheus System Users and Directory
+### Step 1:Creating Prometheus System Users and Directory
 
 Create a system user for Prometheus using below commnds:
 ```
@@ -97,7 +97,7 @@ sudo chown prometheus:prometheus /var/lib/prometheus
 ```
 ---
 
-Step #2:Download Prometheus Binary File
+### Step 2:Download Prometheus Binary File
 
 Now we will download the latest version of Prometheus. We can copy the download link as per our Operating System from Prometheus download page
 
@@ -133,7 +133,7 @@ sudo chown prometheus:prometheus /usr/local/bin/prometheus
 ```
 ---
 
-Step #3:Prometheus configuration file
+### Step 3:Prometheus configuration file
 
 We have already copied /opt/prometheus-2.26.0.linux-amd64/prometheus.yml file /etc/prometheus directory, verify if it present and should look like below and modify it as per your requirement.
 
@@ -142,7 +142,7 @@ sudo vim /etc/prometheus/prometheus.yml
 ```
 ---
 
-Step #4:Creating Prometheus Systemd file
+### Step 4:Creating Prometheus Systemd file
 
 Create the service file using below command:
 ```
@@ -182,7 +182,7 @@ sudo systemctl status prometheus
 ```
 ---
 
-Step #5:Accessing Prometheus in Browser
+### Step 5:Accessing Prometheus in Browser
 
 Now as Prometheus installation and configuration is set up and it is ready to use we can access  its services via web interface.Also check weather port 9090 is UP in firewall.
 
@@ -204,7 +204,7 @@ As we can see the Prometheus dashboards, we can also check the target.As we can 
 
 ---
 
-Step #6:Download Node Exporter
+### Step 6:Download Node Exporter
 
 Go to the official release page of Prometheus Node Exporter and copy the link of the latest version of the Node Exporter package according to your OS type.
 ```
@@ -232,7 +232,7 @@ sudo useradd -rs /bin/false node_exporter
 ```
 ---
 
-Step #7:Creating Node Exporter Systemd service
+### Step 7:Creating Node Exporter Systemd service
 
 Create a node_exporter service file in the /etc/systemd/system directory
 ```
@@ -274,7 +274,7 @@ sudo systemctl status node_exporter
 ```
 ---
 
-Step #8:Configure the Node Exporter as a Prometheus target
+### Step 8:Configure the Node Exporter as a Prometheus target
 
 Now to scrape the node_exporter lets instruct the Prometheus by making a minor change in prometheus.yml file
 
@@ -304,7 +304,7 @@ Hit the URL in your web browser to check weather our target is successfully scra
 
 ---
 
-Step #9:Install Grafana on Ubuntu 24.04 LTS
+### Step 9:Install Grafana on Ubuntu 24.04 LTS
 
 Now lets Install Grafana for wonderful dashboards and data visualization for monitoring systems, servers, services, etc
 
@@ -359,7 +359,7 @@ Now here you can see Home Dashboard page of Grafana
 
 ---
 
-Step #10:Configure Prometheus as Grafana DataSource
+### Step 10:Configure Prometheus as Grafana DataSource
 
 Configure Prometheus as Grafana DataSource
 
@@ -377,7 +377,7 @@ Now click on Save & test so it will prompt a message Data Source is working.
 
 ---
 
-Step #11:Creating Grafana Dashboard to Monitor Linux Server
+### Step 11:Creating Grafana Dashboard to Monitor Linux Server
 
 Now lets build a dashboard in Grafana so then it will able to reflect the metrics of the Linux system.
 
