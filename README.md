@@ -184,9 +184,27 @@ sudo systemctl status prometheus
 
 Step #5:Accessing Prometheus in Browser
 
+Now as Prometheus installation and configuration is set up and it is ready to use we can access  its services via web interface.Also check weather port 9090 is UP in firewall.
 
+Use below command to enable prometheus service in firewall 
+```
+sudo ufw allow 9090/tcp
+```
 
+Now Prometheus service is ready to run and we can access it from any web browser.
+```
+http://server-IP-or-Hostname:9090.
+```
 
+<img width="1356" height="640" alt="image" src="https://github.com/user-attachments/assets/83d605e5-abee-4c2a-adb1-4fce664e0ed0" />
+
+As we can see the Prometheus dashboards, we can also check the target.As we can observe Current state is UP and we can also see the last scrape.
+
+<img width="1275" height="602" alt="image" src="https://github.com/user-attachments/assets/0fcc650c-b370-4540-8d28-d8db3d0e170a" />
+
+---
+
+Step #6:Download Node Exporter
 
 
 
