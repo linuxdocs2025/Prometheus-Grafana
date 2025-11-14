@@ -206,41 +206,196 @@ As we can see the Prometheus dashboards, we can also check the target.As we can 
 
 Step #6:Download Node Exporter
 
+Go to the official release page of Prometheus Node Exporter and copy the link of the latest version of the Node Exporter package according to your OS type.
+```
+cd /tmp
+```
 
+Now lets run the copied URL with wget command
+```
+wget https://github.com/prometheus/node_exporter/releases/download/v1.6.1/node_exporter-1.6.1.linux-amd64.tar.gz
+```
 
+Unzip the downloaded the file using below command
+```
+sudo tar xvfz node_exporter-*.*-amd64.tar.gz
+```
 
+Move the binary file of node exporter to /usr/local/bin location
+```
+sudo mv node_exporter-*.*-amd64/node_exporter /usr/local/bin/
+```
 
+Create a node_exporter user to run the node exporter service
+```
+sudo useradd -rs /bin/false node_exporter
+```
+---
 
+Step #7:Creating Node Exporter Systemd service
 
+Create a node_exporter service file in the /etc/systemd/system directory
+```
+sudo nano /etc/systemd/system/node_exporter.service
+```
 
+```
+[Unit]
 
+Description=Node Exporter
 
+After=network.target
 
+ 
 
+[Service]
 
+User=node_exporter
 
+Group=node_exporter
 
+Type=simple
 
+ExecStart=/usr/local/bin/node_exporter
 
+ 
 
+[Install]
 
+WantedBy=multi-user.target
+```
 
+Now lets start and enable the node_exporter service using below commands
+```
+sudo systemctl daemon-reload
+sudo systemctl start node_exporter
+sudo systemctl enable node_exporter
+sudo systemctl status node_exporter
+```
+---
 
+Step #8:Configure the Node Exporter as a Prometheus target
 
+Now to scrape the node_exporter lets instruct the Prometheus by making a minor change in prometheus.yml file
 
+So go to etc/prometheus and open prometheus.yml
+```
+sudo vim /etc/prometheus/prometheus.yml
+```
 
+```
+- job_name: 'Node_Exporter'
 
+    scrape_interval: 5s
 
+    static_configs:
 
+      - targets: ['<Server_IP_of_Node_Exporter_Machine>:9100']
+```
 
+Now restart the Prometheus Service
+```
+sudo systemctl restart prometheus
+```
 
+Hit the URL in your web browser to check weather our target is successfully scraped by Prometheus or not
 
+<img width="1248" height="660" alt="image" src="https://github.com/user-attachments/assets/7284ee0c-6a7f-4bb9-9ea0-aca3a2f2dd14" />
 
+---
 
+Step #9:Install Grafana on Ubuntu 24.04 LTS
 
+Now lets Install Grafana for wonderful dashboards and data visualization for monitoring systems, servers, services, etc
 
+We can install grafana on Ubuntu either by downloading .deb package from Grafana Download page or using APT which is more easier.
 
+Add the Grafana GPG key in Ubuntu using wget
+```
+wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+```
 
+Next, add the Grafana repository to your APT sources:
+```
+sudo add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
+```
+
+Refresh your APT cache to update your package lists:
+```
+sudo apt update
+```
+
+You can now proceed with the installation:
+```
+sudo apt install grafana
+```
+
+Once Grafana is installed, use systemctl to start the Grafana server:
+```
+sudo systemctl start grafana-server
+```
+
+Next, verify that Grafana is running by checking the service’s status:
+```
+sudo systemctl status grafana-server
+sudo systemctl enable grafana-server
+```
+
+access Grafana Dashboard open your favorite browser, type server IP or Name followed by grafana default port 3000.
+```
+http://your_ip:3000
+```
+
+Here you can see Login page of Grafana now you will have to login with below Grafana default UserName and Password.
+```
+Username – admin
+Password – admin
+```
+<img width="1288" height="665" alt="image" src="https://github.com/user-attachments/assets/f8060b1d-5c5b-4af8-b833-42fe914c9615" />
+
+Now here you can see Home Dashboard page of Grafana
+
+<img width="1309" height="661" alt="image" src="https://github.com/user-attachments/assets/521fb1e6-1dd3-45f4-a86e-e99ceb42ce29" />
+
+---
+
+Step #10:Configure Prometheus as Grafana DataSource
+
+Configure Prometheus as Grafana DataSource
+
+<img width="594" height="605" alt="image" src="https://github.com/user-attachments/assets/42981a0b-b638-455a-8add-c13418bef6d7" />
+
+Now lets click on Add Data sources and select Prometheus
+
+Now configure Prometheus data source by providing Prometheus URL
+
+<img width="1259" height="656" alt="image" src="https://github.com/user-attachments/assets/2d8c3123-50aa-41a1-b377-dff5c5ab92d9" />
+
+As per your requirement you can do other changes or you can also keep remaining configuration as default.
+
+Now click on Save & test so it will prompt a message Data Source is working.
+
+---
+
+Step #11:Creating Grafana Dashboard to Monitor Linux Server
+
+Now lets build a dashboard in Grafana so then it will able to reflect the metrics of the Linux system.
+
+So we will use 14513 to import Grafana.com, Lets come to Grafana Home page and you can see a “+” icon. Click on that and select “Import”
+
+<img width="1271" height="404" alt="image" src="https://github.com/user-attachments/assets/71390184-8609-44db-a802-dbe4432fddee" />
+
+Now provide the Grafana.com Dashboard ID which is 14513 and click on Load
+
+<img width="745" height="540" alt="image" src="https://github.com/user-attachments/assets/58e9dda3-8e7d-4a6a-9c54-4c565921c685" />
+
+Now provide the name and select the Prometheus Datasource and click on Import.
+
+There you are done with the setup. Now your Dashboard is running up!.
+
+<img width="1310" height="612" alt="image" src="https://github.com/user-attachments/assets/7cab2aa8-025c-4ae4-a639-dbed6435a609" />
+
+---
 
 
 
