@@ -9,9 +9,9 @@
 
 ## Prometheus Components
 1. Prometheus Server
-   - Prometheus server is a first component of Prometheus architecture.
-   - Prometheus server is a core of Prometheus architecture which is divided into several parts like Storage, PromQL, HTTP server, etc.
-   - In Prometheus server data is scraped from the target nodes and then stored int the database.
+- Prometheus server is a first component of Prometheus architecture.
+- Prometheus server is a core of Prometheus architecture which is divided into several parts like Storage, PromQL, HTTP server, etc.
+- In Prometheus server data is scraped from the target nodes and then stored int the database.
 
 1.a. Storage
  - Storage in Prometheus server has a local on disk storge.
@@ -49,13 +49,63 @@
 
 ---
 ### What is Grafana ?
+ - Grafana is a free and open source visualization tool mostly used with Prometheus to which monitor metrics.
+ - Grafana provides various dashboards, charts, graphs, alerts for the particular data source.
+ - Grafana allows us to query, visualize, explore metrics and set alerts for the data source which can be a system, server, nodes, cluster, etc.
+ - We can also create our own dynamic dashboard for visualization and monitoring.
+ - We can save the dashboard and can even share with our team members which is one of the main advantage of Grafana.
 
+---
+### What is Node Exporter ?
+ - Node exporter is one of the Prometheus exporters which is used to expose servers or system OS metrics.
+ - With the help of Node exporter we can expose various resources of the system like RAM, CPU utilization, Memory Utilization, disk space.
+ - Node exporter runs as a system service which gathers the metrics of your system and that gathered metrics is displayed with the help of Grafana visualization tool.
 
+---
+### Prerequisites
+ - Ubuntu with 22.04 Version
+ - Root user account with sudo  privilege.
+ - Prometheus system user and group.
+ - Sufficient storage on your system and good internet connectivity.
+ - Ports Required- 9090 (Prometheus), 3000 (Grafana), 9100 (Node Exporter)
 
+---
 
+We will update the system repository index by using the following command.
+```
+sudo apt update -y
+```
+---
 
+Step #1:Creating Prometheus System Users and Directory
 
+Create a system user for Prometheus using below commnds:
+```
+sudo useradd --no-create-home --shell /bin/false prometheus
+```
 
+Create the directories in which we will be storing our configuration files and libraries:
+```
+sudo mkdir /etc/prometheus
+sudo mkdir /var/lib/prometheus
+```
+
+Set the ownership of the /var/lib/prometheus directory with below command:
+```
+sudo chown prometheus:prometheus /var/lib/prometheus
+```
+---
+
+Step #2:Download Prometheus Binary File
+
+Now we will download the latest version of Prometheus. We can copy the download link as per our Operating System from Prometheus download page
+
+Using below command we can download Prometheus, here we are downloading Prometheus 2.46 version, you use above link to download specific version.
+
+You need to inside /tmp :
+```
+cd /tmp/
+```
 
 
 
