@@ -108,9 +108,66 @@ You need to inside /tmp :
 cd /tmp/
 ```
 
+Download the Prometheus setup using wget
+```
+wget https://github.com/prometheus/prometheus/releases/download/v2.46.0/prometheus-2.46.0.linux-amd64.tar.gz
+```
 
+Extract the files using tar :
+```
+tar -xvf prometheus-2.46.0.linux-amd64.tar.gz
+```
 
+Move the configuration file and set the owner to the  prometheus user:
+```
+cd prometheus-2.46.0.linux-amd64
+sudo mv console* /etc/prometheus
+sudo mv prometheus.yml /etc/prometheus
+sudo chown -R prometheus:prometheus /etc/prometheus
+```
 
+Move the binaries and set the owner:
+```
+sudo mv prometheus /usr/local/bin/
+sudo chown prometheus:prometheus /usr/local/bin/prometheus
+```
+---
+
+Step #3:Prometheus configuration file
+
+We have already copied /opt/prometheus-2.26.0.linux-amd64/prometheus.yml file /etc/prometheus directory, verify if it present and should look like below and modify it as per your requirement.
+
+```
+sudo vim /etc/prometheus/prometheus.yml
+```
+---
+
+Step #4:Creating Prometheus Systemd file
+
+Create the service file using below command:
+```
+ sudo vim /etc/systemd/system/prometheus.service
+```
+
+---
+[Unit]
+Description=Prometheus
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+ExecStart=/usr/local/bin/prometheus \
+    --config.file /etc/prometheus/prometheus.yml \
+    --storage.tsdb.path /var/lib/prometheus/ \
+    --web.console.templates=/etc/prometheus/consoles \
+    --web.console.libraries=/etc/prometheus/console_libraries
+
+[Install]
+WantedBy=multi-user.target
+---
 
 
 
