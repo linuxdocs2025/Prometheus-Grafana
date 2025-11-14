@@ -149,7 +149,7 @@ Create the service file using below command:
  sudo vim /etc/systemd/system/prometheus.service
 ```
 
----
+```
 [Unit]
 Description=Prometheus
 Wants=network-online.target
@@ -167,8 +167,22 @@ ExecStart=/usr/local/bin/prometheus \
 
 [Install]
 WantedBy=multi-user.target
+```
+
+Reload systemd:
+```
+sudo systemctl daemon-reload
+```
+
+Start, Enable, Status Prometheus service:
+```
+sudo systemctl start prometheus
+sudo systemctl enable prometheus
+sudo systemctl status prometheus
+```
 ---
 
+Step #5:Accessing Prometheus in Browser
 
 
 
